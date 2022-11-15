@@ -19,12 +19,12 @@
     <meta name="description" content="C++ 11新特性学习笔记[TOC] auto &amp; decltype关于C++11新特性，最先提到的肯定是类型推导，C++11引入了auto和decltype关键字，使用他们可以在编译期就推导出变量或者表达式的类型，方便开发者编码也简化了代码。  auto：让编译器在编译器就推导出变量的类型，可以通过&#x3D;右边的类型推导出变量的类型。  1auto a &#x3D; 10; &#x2F;&#x2F; 10是int型，可以自">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 11新特性学习笔记">
-<meta property="og:url" content="http://example.com/2022/02/18/C++%2011%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:url" content="http://example.com/2022/04/01/C++%2011%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="PlatoCN">
 <meta property="og:description" content="C++ 11新特性学习笔记[TOC] auto &amp; decltype关于C++11新特性，最先提到的肯定是类型推导，C++11引入了auto和decltype关键字，使用他们可以在编译期就推导出变量或者表达式的类型，方便开发者编码也简化了代码。  auto：让编译器在编译器就推导出变量的类型，可以通过&#x3D;右边的类型推导出变量的类型。  1auto a &#x3D; 10; &#x2F;&#x2F; 10是int型，可以自">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-18T03:39:07.000Z">
-<meta property="article:modified_time" content="2022-11-15T12:42:01.224Z">
+<meta property="article:published_time" content="2022-04-01T04:39:07.000Z">
+<meta property="article:modified_time" content="2022-11-15T13:25:34.982Z">
 <meta property="article:author" content="RenMingchang">
 <meta property="article:tag" content="c11特性">
 <meta name="twitter:card" content="summary_large_image">
@@ -200,8 +200,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-02-18 11:39" pubdate>
-          2022年2月18日 中午
+        <time datetime="2022-04-01 12:39" pubdate>
+          2022年4月1日 下午
         </time>
       </span>
     
@@ -223,7 +223,7 @@
         
         
         
-          117 分钟
+          119 分钟
         
       </span>
     
@@ -278,7 +278,7 @@
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cont <span class="hljs-type">int</span> &amp;i = <span class="hljs-number">1</span>;<br><span class="hljs-type">int</span> a = <span class="hljs-number">2</span>;<br><span class="hljs-keyword">decltype</span>(i) b = <span class="hljs-number">2</span>; <span class="hljs-comment">// b是const int&amp;</span><br></code></pre></td></tr></table></figure>
 
-<p>关于auto和decltype的详细介绍请看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137662774">C++11的类型推导详解</a></p>
+<p>关于auto和decltype的详细介绍请看：[C++11的类型推导详解](<a target="_blank" rel="noopener" href="https://platocn.github.io/2022/02/17/C11/auto&decltype/">C++ 11新特性学习笔记-auto&amp;&amp;decltype - PlatoCN</a>)</p>
 <h3 id="左值右值"><a href="#左值右值" class="headerlink" title="左值右值"></a>左值右值</h3><p>众所周知C++11新增了右值引用，这里涉及到很多概念：</p>
 <ul>
 <li>左值：可以取地址并且有名字的东西就是左值。</li>
@@ -291,16 +291,16 @@
 <li>完美转发：可以写一个接受任意实参的函数模板，并转发到其它函数，目标函数会收到与转发函数完全相同的实参。</li>
 <li>返回值优化：当函数需要返回一个对象实例时候，就会创建一个临时对象并通过复制构造函数将目标对象复制到临时对象，这里有复制构造函数和析构函数会被多余的调用到，有代价，而通过返回值优化，C++标准允许省略调用这些复制构造函数。</li>
 </ul>
-<p>这里的详细介绍请看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137662465">左值引用、右值引用、移动语义、完美转发，你知道的不知道的都在这里</a></p>
-<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3><p>在C++11中可以直接在变量名后面加上初始化列表来进行对象的初始化，详细介绍一定要看这篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137851769">c++11新特性之列表初始化</a></p>
-<h3 id="std-function-amp-std-bind-amp-lambda表达式"><a href="#std-function-amp-std-bind-amp-lambda表达式" class="headerlink" title="std::function &amp; std::bind &amp; lambda表达式"></a>std::function &amp; std::bind &amp; lambda表达式</h3><p>c++11新增了std::function、std::bind、lambda表达式等封装使函数调用更加方便，详细介绍请看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137884434">c++11新特性之std::function和lambda表达式</a></p>
+<p>这里的详细介绍请看：[左值引用、右值引用、移动语义、完美转发，你知道的不知道的都在这里](<a target="_blank" rel="noopener" href="https://platocn.github.io/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/">C++ 11新特性学习笔记- 左值、右值 - PlatoCN</a>)</p>
+<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3><p>在C++11中可以直接在变量名后面加上初始化列表来进行对象的初始化，详细介绍一定要看这篇文章：[c++11新特性之列表初始化](<a target="_blank" rel="noopener" href="https://platocn.github.io/2022/03/05/C11/%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/">C++ 11新特性学习笔记- 初始化列表 - PlatoCN</a>)</p>
+<h3 id="std-function-amp-std-bind-amp-lambda表达式"><a href="#std-function-amp-std-bind-amp-lambda表达式" class="headerlink" title="std::function &amp; std::bind &amp; lambda表达式"></a>std::function &amp; std::bind &amp; lambda表达式</h3><p>c++11新增了std::function、std::bind、lambda表达式等封装使函数调用更加方便，详细介绍请看：[c++11新特性之std::function和lambda表达式](<a target="_blank" rel="noopener" href="https://platocn.github.io/2022/03/02/C11/stdfunction%E5%92%8Clambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C++ 11新特性学习笔记- std::function&amp;&amp;lambda - PlatoCN</a>)</p>
 <h3 id="模板的改进"><a href="#模板的改进" class="headerlink" title="模板的改进"></a>模板的改进</h3><p>C++11关于模板有一些细节的改进：</p>
 <ul>
 <li>模板的右尖括号</li>
 <li>模板的别名</li>
 <li>函数模板的默认模板参数</li>
 </ul>
-<p>详细介绍请看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137851516">c++11新特性之模板的改进</a></p>
+<p>详细介绍请看：[c++11新特性之模板的改进](<a target="_blank" rel="noopener" href="https://platocn.github.io/2022/03/09/C11/%E6%A8%A1%E6%9D%BF/">C++ 11新特性学习笔记- 模板 - PlatoCN</a>)</p>
 <h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>c++11关于并发引入了好多好东西，有：</p>
 <ul>
 <li>std::thread相关</li>
@@ -313,7 +313,7 @@
 <li>std::future相关</li>
 <li>async相关</li>
 </ul>
-<p>详细介绍请看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137914574">c++11新特性之线程相关所有知识点</a></p>
+<p>详细介绍请看：[c++11新特性之线程相关所有知识点](<a target="_blank" rel="noopener" href="https://platocn.github.io/2022/02/16/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/">C++ 11新特性学习笔记-线程与并发 - PlatoCN</a>)</p>
 <h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><p>很多人谈到c++，说它特别难，可能有一部分就是因为c++的内存管理吧，不像java那样有虚拟机动态的管理内存，在程序运行过程中可能就会出现内存泄漏，然而这种问题其实都可以通过c++11引入的智能指针来解决，相反我还认为这种内存管理还是c++语言的优势，因为尽在掌握。</p>
 <p>c++11引入了三种智能指针：</p>
 <ul>
@@ -321,7 +321,7 @@
 <li>std::weak_ptr</li>
 <li>std::unique_ptr</li>
 </ul>
-<p>详细介绍请看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137958974">c++11新特性之智能指针</a></p>
+<p>详细介绍请看：[c++11新特性之智能指针](<a target="_blank" rel="noopener" href="https://platocn.github.io/2022/03/19/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">C++ 11新特性学习笔记- 智能指针 - PlatoCN</a>)</p>
 <h3 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h3><p>直接看代码</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt; vec;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> iter = vec.<span class="hljs-built_in">begin</span>(); iter != vec.<span class="hljs-built_in">end</span>(); iter++) &#123; <span class="hljs-comment">// before c++11</span><br>    cout &lt;&lt; *iter &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i : vec) &#123; <span class="hljs-comment">// c++11基于范围的for循环</span><br>    cout &lt;&lt; <span class="hljs-string">&quot;i&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -564,7 +564,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>C++ 11新特性学习笔记</div>
-      <div>http://example.com/2022/02/18/C++ 11新特性学习笔记/</div>
+      <div>http://example.com/2022/04/01/C++ 11新特性学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -576,7 +576,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年2月18日</div>
+          <div>2022年4月1日</div>
         </div>
       
       
@@ -608,18 +608,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/02/C11/stdfunction%E5%92%8Clambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="C++ 11新特性学习笔记- std::function&amp;&amp;lambda">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">C++ 11新特性学习笔记- std::function&amp;&amp;lambda</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/17/C11/auto&amp;decltype/" title="C++ 11新特性学习笔记-auto&amp;&amp;decltype">
-                        <span class="hidden-mobile">C++ 11新特性学习笔记-auto&amp;&amp;decltype</span>
+                      <a href="/2022/03/19/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" title="C++ 11新特性学习笔记- 智能指针">
+                        <span class="hidden-mobile">C++ 11新特性学习笔记- 智能指针</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
