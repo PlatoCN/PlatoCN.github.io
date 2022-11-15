@@ -18,19 +18,20 @@
   
     <meta name="description" content="c++11关于并发引入了好多好东西，这里按照如下顺序介绍： [TOC] std::thread相关c++11之前你可能使用pthread_xxx来创建线程，繁琐且不易读，c++11引入了std::thread来创建线程，支持对线程join或者detach。直接看代码： 12345678910111213141516171819202122232425262728#include &lt;iostr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PlatoCN">
-<meta property="og:url" content="http://example.com/2022/11/15/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/index.html">
+<meta property="og:title" content="C++ 11新特性学习笔记-线程与并发">
+<meta property="og:url" content="http://example.com/2022/02/16/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/index.html">
 <meta property="og:site_name" content="PlatoCN">
 <meta property="og:description" content="c++11关于并发引入了好多好东西，这里按照如下顺序介绍： [TOC] std::thread相关c++11之前你可能使用pthread_xxx来创建线程，繁琐且不易读，c++11引入了std::thread来创建线程，支持对线程join或者detach。直接看代码： 12345678910111213141516171819202122232425262728#include &lt;iostr">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-15T09:30:57.449Z">
-<meta property="article:modified_time" content="2022-11-15T09:37:41.410Z">
+<meta property="article:published_time" content="2022-02-16T08:39:00.000Z">
+<meta property="article:modified_time" content="2022-11-15T12:51:41.979Z">
 <meta property="article:author" content="RenMingchang">
+<meta property="article:tag" content="c11特性">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>PlatoCN</title>
+  <title>C++ 11新特性学习笔记-线程与并发 - PlatoCN</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -188,7 +189,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="C++ 11新特性学习笔记-线程与并发"></span>
           
         </div>
 
@@ -199,8 +200,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-15 17:30" pubdate>
-          2022年11月15日 下午
+        <time datetime="2022-02-16 16:39" pubdate>
+          2022年2月16日 下午
         </time>
       </span>
     
@@ -260,7 +261,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">C++ 11新特性学习笔记-线程与并发</h1>
             
             
               <div class="markdown-body">
@@ -384,6 +385,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/c11%E7%89%B9%E6%80%A7/">#c11特性</a>
+      
+    </div>
   
 </div>
 
@@ -393,8 +422,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://example.com/2022/11/15/C11/线程与并发/</div>
+      <div>C++ 11新特性学习笔记-线程与并发</div>
+      <div>http://example.com/2022/02/16/C11/线程与并发/</div>
     </div>
     <div class="license-meta">
       
@@ -406,7 +435,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月15日</div>
+          <div>2022年2月16日</div>
         </div>
       
       
@@ -438,9 +467,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/15/C11/%E6%A8%A1%E6%9D%BF/" title="">
+                      <a href="/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/" title="C++ 11新特性学习笔记- 左值、右值">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">C++ 11新特性学习笔记- 左值、右值</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -448,8 +477,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/11/15/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2022/01/15/%E5%BC%80%E6%BA%90%E5%BA%93-sigslot%E5%BA%93/" title="开源库-sigslot库的简单例子">
+                        <span class="hidden-mobile">开源库-sigslot库的简单例子</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

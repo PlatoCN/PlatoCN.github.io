@@ -18,19 +18,20 @@
   
     <meta name="description" content="很多人谈到c++，说它特别难，可能有一部分就是因为c++的内存管理吧，不像java那样有虚拟机动态的管理内存，在程序运行过程中可能就会出现内存泄漏，然而这种问题其实都可以通过c++11引入的智能指针来解决，相反我还认为这种内存管理还是c++语言的优势，因为尽在掌握。 c++11引入了三种智能指针： [TOC] shared_ptrshared_ptr使用了引用计数，每一个shared_ptr的拷贝">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PlatoCN">
-<meta property="og:url" content="http://example.com/2022/11/15/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/index.html">
+<meta property="og:title" content="C++ 11新特性学习笔记- 智能指针">
+<meta property="og:url" content="http://example.com/2022/03/19/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/index.html">
 <meta property="og:site_name" content="PlatoCN">
 <meta property="og:description" content="很多人谈到c++，说它特别难，可能有一部分就是因为c++的内存管理吧，不像java那样有虚拟机动态的管理内存，在程序运行过程中可能就会出现内存泄漏，然而这种问题其实都可以通过c++11引入的智能指针来解决，相反我还认为这种内存管理还是c++语言的优势，因为尽在掌握。 c++11引入了三种智能指针： [TOC] shared_ptrshared_ptr使用了引用计数，每一个shared_ptr的拷贝">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-15T09:30:57.387Z">
-<meta property="article:modified_time" content="2022-11-15T09:38:47.370Z">
+<meta property="article:published_time" content="2022-03-19T02:23:01.000Z">
+<meta property="article:modified_time" content="2022-11-15T12:50:59.241Z">
 <meta property="article:author" content="RenMingchang">
+<meta property="article:tag" content="c11特性">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>PlatoCN</title>
+  <title>C++ 11新特性学习笔记- 智能指针 - PlatoCN</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -188,7 +189,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="C++ 11新特性学习笔记- 智能指针"></span>
           
         </div>
 
@@ -199,8 +200,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-15 17:30" pubdate>
-          2022年11月15日 下午
+        <time datetime="2022-03-19 10:23" pubdate>
+          2022年3月19日 上午
         </time>
       </span>
     
@@ -260,7 +261,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">C++ 11新特性学习笔记- 智能指针</h1>
             
             
               <div class="markdown-body">
@@ -316,6 +317,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/c11%E7%89%B9%E6%80%A7/">#c11特性</a>
+      
+    </div>
   
 </div>
 
@@ -325,8 +354,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://example.com/2022/11/15/C11/智能指针/</div>
+      <div>C++ 11新特性学习笔记- 智能指针</div>
+      <div>http://example.com/2022/03/19/C11/智能指针/</div>
     </div>
     <div class="license-meta">
       
@@ -338,7 +367,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月15日</div>
+          <div>2022年3月19日</div>
         </div>
       
       
@@ -370,18 +399,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/15/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" title="">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/11/15/C11/auto&amp;decltype/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2022/03/09/C11/%E6%A8%A1%E6%9D%BF/" title="C++ 11新特性学习笔记- 模板">
+                        <span class="hidden-mobile">C++ 11新特性学习笔记- 模板</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
