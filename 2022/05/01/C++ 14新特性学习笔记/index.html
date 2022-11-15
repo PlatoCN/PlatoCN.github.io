@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenMingchang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[TOC] 函数返回值类型推导C++14对函数返回类型推导规则做了优化，先看一段代码： 123456789101112#include &lt;iostream&gt;using namespace std;auto func(int i) &amp;#123;    return i;&amp;#125;int main() &amp;#123;    cout &lt;&lt; func(4) &lt;&lt; en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 14新特性学习笔记">
+<meta property="og:url" content="http://platocn.com/2022/05/01/C++%2014%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="PlatoCN">
+<meta property="og:description" content="[TOC] 函数返回值类型推导C++14对函数返回类型推导规则做了优化，先看一段代码： 123456789101112#include &lt;iostream&gt;using namespace std;auto func(int i) &amp;#123;    return i;&amp;#125;int main() &amp;#123;    cout &lt;&lt; func(4) &lt;&lt; en">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-01T04:39:07.000Z">
+<meta property="article:modified_time" content="2022-11-15T15:00:24.393Z">
+<meta property="article:author" content="RenMingchang">
+<meta property="article:tag" content="c14特性">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>C++ 14新特性学习笔记 - PlatoCN</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"platocn.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"/img/avatar.png"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C++"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>PlatoCN&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C++ 14新特性学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-05-01 12:39" pubdate>
+          2022年5月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">C++ 14新特性学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>[TOC]</p>
+<h3 id="函数返回值类型推导"><a href="#函数返回值类型推导" class="headerlink" title="函数返回值类型推导"></a>函数返回值类型推导</h3><p>C++14对函数返回类型推导规则做了优化，先看一段代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">#include &lt;iostream&gt;<br><br>using namespace std;<br><br>auto func(int i) &#123;<br>    return i;<br>&#125;<br><br>int main() &#123;<br>    cout &lt;&lt; func(4) &lt;&lt; endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>使用C++11编译：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">~/test$ g++ test.cc -std=c++11<br>test.cc:5:16: error: ‘func’ function uses ‘auto’ type specifier without trailing return type<br> auto func(int i) &#123;<br>                ^<br>test.cc:5:16: note: deduced return type only available with -std=c++14 or -std=gnu++14<br></code></pre></td></tr></table></figure>
+
+
+
+<p>上面的代码使用C++11是不能通过编译的，通过编译器输出的信息也可以看见这个特性需要到C++14才被支持。</p>
+<p>返回值类型推导也可以用在模板中：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">#include &lt;iostream&gt;<br>using namespace std;<br><br>template&lt;typename T&gt; auto func(T t) &#123; return t; &#125;<br><br>int main() &#123;<br>    cout &lt;&lt; func(4) &lt;&lt; endl;<br>    cout &lt;&lt; func(3.4) &lt;&lt; endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>注意</strong>：</p>
+<p>）函数内如果有多个return语句，它们必须返回相同的类型，否则编译失败。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">auto func(bool flag) &#123;<br>    if (flag) return 1;<br>    else return 2.3; // error<br>&#125;<br>// inconsistent deduction for auto return type: ‘int’ and then ‘double’<br></code></pre></td></tr></table></figure>
+
+
+
+<p>）如果return语句返回初始化列表，返回值类型推导也会失败</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">auto func() &#123;<br>    return &#123;1, 2, 3&#125;; // error returning initializer list<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>) 如果函数是虚函数，不能使用返回值类型推导</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">struct A &#123;<br>    // error: virtual function cannot have deduced return type<br>    virtual auto func() &#123; return 1; &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>） 返回类型推导可以用在前向声明中，但是在使用它们之前，翻译单元中必须能够得到函数定义</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">auto f();               // declared, not yet defined<br>auto f() &#123; return 42; &#125; // defined, return type is int<br><br>int main() &#123;<br>    cout &lt;&lt; f() &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>）返回类型推导可以用在递归函数中，但是递归调用必须以至少一个返回语句作为先导，以便编译器推导出返回类型。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">auto sum(int i) &#123;<br>    if (i == 1)<br>        return i;              // return int<br>    else<br>        return sum(i - 1) + i; // ok<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="lambda参数auto"><a href="#lambda参数auto" class="headerlink" title="lambda参数auto"></a>lambda参数auto</h3><p>在C++11中，lambda表达式参数需要使用具体的类型声明：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">auto f = [] (int a) &#123; return a; &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>在C++14中，对此进行优化，lambda表达式参数可以直接是auto：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">auto f = [] (auto a) &#123; return a; &#125;;<br>cout &lt;&lt; f(1) &lt;&lt; endl;<br>cout &lt;&lt; f(2.3f) &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="变量模板"><a href="#变量模板" class="headerlink" title="变量模板"></a>变量模板</h3><p>C++14支持变量模板：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">template&lt;class T&gt;<br>constexpr T pi = T(3.1415926535897932385L);<br><br>int main() &#123;<br>    cout &lt;&lt; pi&lt;int&gt; &lt;&lt; endl; // 3<br>    cout &lt;&lt; pi&lt;double&gt; &lt;&lt; endl; // 3.14159<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="别名模板"><a href="#别名模板" class="headerlink" title="别名模板"></a>别名模板</h3><p>C++14也支持别名模板：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs text">template&lt;typename T, typename U&gt;<br>struct A &#123;<br>    T t;<br>    U u;<br>&#125;;<br><br>template&lt;typename T&gt;<br>using B = A&lt;T, int&gt;;<br><br>int main() &#123;<br>    B&lt;double&gt; b;<br>    b.t = 10;<br>    b.u = 20;<br>    cout &lt;&lt; b.t &lt;&lt; endl;<br>    cout &lt;&lt; b.u &lt;&lt; endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="constexpr的限制"><a href="#constexpr的限制" class="headerlink" title="constexpr的限制"></a>constexpr的限制</h3><p>C++14相较于C++11对constexpr减少了一些限制：</p>
+<p>）C++11中constexpr函数可以使用递归，在C++14中可以使用局部变量和循环</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">constexpr int factorial(int n) &#123; // C++14 和 C++11均可<br>    return n &lt;= 1 ? 1 : (n * factorial(n - 1));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>在C++14中可以这样做：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">constexpr int factorial(int n) &#123; // C++11中不可，C++14中可以<br>    int ret = 0;<br>    for (int i = 0; i &lt; n; ++i) &#123;<br>        ret += i;<br>    &#125;<br>    return ret;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>）C++11中constexpr函数必须必须把所有东西都放在一个单独的return语句中，而constexpr则无此限制：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">constexpr int func(bool flag) &#123; // C++14 和 C++11均可<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>在C++14中可以这样：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">constexpr int func(bool flag) &#123; // C++11中不可，C++14中可以<br>    if (flag) return 1;<br>    else return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="deprecated-标记"><a href="#deprecated-标记" class="headerlink" title="[[deprecated]]标记"></a>[[<code>deprecated</code>]]标记</h3><p>C++14中增加了deprecated标记，修饰类、变、函数等，当程序中使用到了被其修饰的代码时，编译时被产生警告，用户提示开发者该标记修饰的内容将来可能会被丢弃，尽量不要使用。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">struct [[deprecated]] A &#123; &#125;;<br><br>int main() &#123;<br>    A a;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>当编译时，会出现如下警告：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">~/test$ g++ test.cc -std=c++14<br>test.cc: In function ‘int main()’:<br>test.cc:11:7: warning: ‘A’ is deprecated [-Wdeprecated-declarations]<br>     A a;<br>       ^<br>test.cc:6:23: note: declared here<br> struct [[deprecated]] A &#123;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="二进制字面量与整形字面量分隔符"><a href="#二进制字面量与整形字面量分隔符" class="headerlink" title="二进制字面量与整形字面量分隔符"></a>二进制字面量与整形字面量分隔符</h3><p>C++14引入了二进制字面量，也引入了分隔符，防止看起来眼花哈~</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">int a = 0b0001&#x27;0011&#x27;1010;<br>double b = 3.14&#x27;1234&#x27;1234&#x27;1234;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="std-make-unique"><a href="#std-make-unique" class="headerlink" title="std::make_unique"></a>std::make_unique</h3><p>我们都知道C++11中有std::make_shared，却没有std::make_unique，在C++14已经改善。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">struct A &#123;&#125;;<br>std::unique_ptr&lt;A&gt; ptr = std::make_unique&lt;A&gt;();<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="std-shared-timed-mutex与std-shared-lock"><a href="#std-shared-timed-mutex与std-shared-lock" class="headerlink" title="std::shared_timed_mutex与std::shared_lock"></a>std::shared_timed_mutex与std::shared_lock</h3><p>C++14通过std::shared_timed_mutex和std::shared_lock来实现读写锁，保证多个线程可以同时读，但是写线程必须独立运行，写操作不可以同时和读操作一起进行。</p>
+<p>实现方式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs text">struct ThreadSafe &#123;<br>    mutable std::shared_timed_mutex mutex_;<br>    int value_;<br><br>    ThreadSafe() &#123;<br>        value_ = 0;<br>    &#125;<br><br>    int get() const &#123;<br>        std::shared_lock&lt;std::shared_timed_mutex&gt; loc(mutex_);<br>        return value_;<br>    &#125;<br><br>    void increase() &#123;<br>        std::unique_lock&lt;std::shared_timed_mutex&gt; lock(mutex_);<br>        value_ += 1;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>为什么是timed的锁呢，因为可以带超时时间，具体可以自行查询相关资料哈，网上有很多。</p>
+<h3 id="std-integer-sequence"><a href="#std-integer-sequence" class="headerlink" title="std::integer_sequence"></a>std::integer_sequence</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs text">template&lt;typename T, T... ints&gt;<br>void print_sequence(std::integer_sequence&lt;T, ints...&gt; int_seq)<br>&#123;<br>    std::cout &lt;&lt; &quot;The sequence of size &quot; &lt;&lt; int_seq.size() &lt;&lt; &quot;: &quot;;<br>    ((std::cout &lt;&lt; ints &lt;&lt; &#x27; &#x27;), ...);<br>    std::cout &lt;&lt; &#x27;\n&#x27;;<br>&#125;<br><br>int main() &#123;<br>    print_sequence(std::integer_sequence&lt;int, 9, 2, 5, 1, 9, 1, 6&gt;&#123;&#125;);<br>    return 0;<br>&#125;<br><br>输出：7 9 2 5 1 9 1 6<br></code></pre></td></tr></table></figure>
+
+
+
+<p>std::integer_sequence和std::tuple的配合使用：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs text">template &lt;std::size_t... Is, typename F, typename T&gt;<br>auto map_filter_tuple(F f, T&amp; t) &#123;<br>    return std::make_tuple(f(std::get&lt;Is&gt;(t))...);<br>&#125;<br><br>template &lt;std::size_t... Is, typename F, typename T&gt;<br>auto map_filter_tuple(std::index_sequence&lt;Is...&gt;, F f, T&amp; t) &#123;<br>    return std::make_tuple(f(std::get&lt;Is&gt;(t))...);<br>&#125;<br><br>template &lt;typename S, typename F, typename T&gt;<br>auto map_filter_tuple(F&amp;&amp; f, T&amp; t) &#123;<br>    return map_filter_tuple(S&#123;&#125;, std::forward&lt;F&gt;(f), t);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="std-exchange"><a href="#std-exchange" class="headerlink" title="std::exchange"></a>std::exchange</h3><p>直接看代码吧：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">int main() &#123;<br>    std::vector&lt;int&gt; v;<br>    std::exchange(v, &#123;1,2,3,4&#125;);<br>    cout &lt;&lt; v.size() &lt;&lt; endl;<br>    for (int a : v) &#123;<br>        cout &lt;&lt; a &lt;&lt; &quot; &quot;;<br>    &#125;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>看样子貌似和std::swap作用相同，那它俩有什么区别呢？</p>
+<p>可以看下exchange的实现：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">template&lt;class T, class U = T&gt;<br>constexpr T exchange(T&amp; obj, U&amp;&amp; new_value) &#123;<br>    T old_value = std::move(obj);<br>    obj = std::forward&lt;U&gt;(new_value);<br>    return old_value;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>可以看见new_value的值给了obj，而没有对new_value赋值，这里相信您已经知道了它和swap的区别了吧！</p>
+<h3 id="std-quoted"><a href="#std-quoted" class="headerlink" title="std::quoted"></a>std::quoted</h3><p>C++14引入std::quoted用于给字符串添加双引号，直接看代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">int main() &#123;<br>    string str = &quot;hello world&quot;;<br>    cout &lt;&lt; str &lt;&lt; endl;<br>    cout &lt;&lt; std::quoted(str) &lt;&lt; endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>编译&amp;输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">~/test$ g++ test.cc -std=c++14<br>~/test$ ./a.out<br>hello world<br>&quot;hello world&quot;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/c14%E7%89%B9%E6%80%A7/">#c14特性</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C++ 14新特性学习笔记</div>
+      <div>http://platocn.com/2022/05/01/C++ 14新特性学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RenMingchang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年5月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/01/C++%2011%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="C++ 11新特性学习笔记">
+                        <span class="hidden-mobile">C++ 11新特性学习笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a href="https://github.com/PlatoCN" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-github-fill"></i> </a> <a href="https://u.wechat.com/EE3PYlLtzJLEL3cb4jcAyok" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-wechat-fill"></i> </a>  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=CcchNxiPwFOyNTSTnjOR3kzDWlK1_6jo&noverify=0" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-qq-fill"></i> </a> <span>PlatoCN</span>
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"superSample":2,"width":200,"height":350,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false});</script></body>
+</html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -19,7 +19,7 @@
     <meta name="description" content="PlatoCN Blog">
 <meta property="og:type" content="website">
 <meta property="og:title" content="PlatoCN">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://platocn.com/index.html">
 <meta property="og:site_name" content="PlatoCN">
 <meta property="og:description" content="PlatoCN Blog">
 <meta property="og:locale" content="zh_CN">
@@ -60,7 +60,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"platocn.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"/img/avatar.png"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C++"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -160,6 +160,13 @@
           
         
         
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
         
           <li class="nav-item" id="color-toggle-btn">
             <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
@@ -215,7 +222,80 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/05/01/C++%2014%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 14新特性学习笔记">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/05/01/C++%2014%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_self">
+          C++ 14新特性学习笔记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2022/05/01/C++%2014%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_self">
+        <div>
+          
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-05-01 12:39" pubdate>
+              2022-05-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/c14%E7%89%B9%E6%80%A7/">#c14特性</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/04/01/C++%2011%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/04/01/C++%2011%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_self">
@@ -224,9 +304,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/04/01/C++%2011%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_self">
+      <a class="index-excerpt " href="/2022/04/01/C++%2011%E6%96%B0%E7%89%B9%E6%80%A7%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" target="_self">
         <div>
-          C++ 11新特性学习笔记[TOC] auto &amp; decltype关于C++11新特性，最先提到的肯定是类型推导，C++11引入了auto和decltype关键字，使用他们可以在编译期就推导出变量或者表达式的类型，方便开发者编码也简化了代码。  auto：让编译器在编译器就推导出变量的类型，可以通过=右边的类型推导出变量的类型。  1auto a = 10; // 10是int型，可以自
+          
         </div>
       </a>
 
@@ -276,7 +356,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/19/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记- 智能指针">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/03/19/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" target="_self">
@@ -285,9 +371,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/19/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" target="_self">
+      <a class="index-excerpt " href="/2022/03/19/C11/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" target="_self">
         <div>
-          很多人谈到c++，说它特别难，可能有一部分就是因为c++的内存管理吧，不像java那样有虚拟机动态的管理内存，在程序运行过程中可能就会出现内存泄漏，然而这种问题其实都可以通过c++11引入的智能指针来解决，相反我还认为这种内存管理还是c++语言的优势，因为尽在掌握。 c++11引入了三种智能指针： [TOC] shared_ptrshared_ptr使用了引用计数，每一个shared_ptr的拷贝
+          
         </div>
       </a>
 
@@ -337,7 +423,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/09/C11/%E6%A8%A1%E6%9D%BF/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记- 模板">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/03/09/C11/%E6%A8%A1%E6%9D%BF/" target="_self">
@@ -346,9 +438,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/09/C11/%E6%A8%A1%E6%9D%BF/" target="_self">
+      <a class="index-excerpt " href="/2022/03/09/C11/%E6%A8%A1%E6%9D%BF/" target="_self">
         <div>
-          C++11关于模板有一些细节的改进： [TOC] 模板的右尖括号C++11之前是不允许两个右尖括号出现的，会被认为是右移操作符，所以需要中间加个空格进行分割，避免发生编译错误。 1234int main() &#123;    std::vector&lt;std::vector&lt;int&gt;&gt; a; // error    std::vector&lt;std::vector&lt
+          
         </div>
       </a>
 
@@ -398,7 +490,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/05/C11/%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记- 初始化列表">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/03/05/C11/%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/" target="_self">
@@ -407,9 +505,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/05/C11/%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/" target="_self">
+      <a class="index-excerpt " href="/2022/03/05/C11/%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/" target="_self">
         <div>
-          C++11新增了列表初始化的概念。 在C++11中可以直接在变量名后面加上初始化列表来进行对象的初始化。 1234567891011121314151617struct A &#123;public:    A(int) &#123;&#125;private:    A(const A&amp;) &#123;&#125;&#125;;int main() &#123;    A a(123);
+          
         </div>
       </a>
 
@@ -459,7 +557,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/03/02/C11/stdfunction%E5%92%8Clambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记- std::function&amp;&amp;lambda">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/03/02/C11/stdfunction%E5%92%8Clambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
@@ -468,9 +572,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/02/C11/stdfunction%E5%92%8Clambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
+      <a class="index-excerpt " href="/2022/03/02/C11/stdfunction%E5%92%8Clambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_self">
         <div>
-          [TOC] std::function讲std::function前首先需要了解下什么是可调用对象 满足以下条件之一就可称为可调用对象：  是一个函数指针  是一个具有operator()成员函数的类对象(传说中的仿函数)，lambda表达式  是一个可被转换为函数指针的类对象  是一个类成员(函数)指针  bind表达式或其它函数对象   而std::function就是上面这种可调用对象的封装
+          
         </div>
       </a>
 
@@ -520,7 +624,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/17/C11/auto&amp;decltype/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记-auto&amp;&amp;decltype">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/02/17/C11/auto&amp;decltype/" target="_self">
@@ -529,9 +639,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/17/C11/auto&amp;decltype/" target="_self">
+      <a class="index-excerpt " href="/2022/02/17/C11/auto&amp;decltype/" target="_self">
         <div>
-          auto &amp; decltype关于C++11新特性，最先提到的肯定是类型推导，C++11引入了auto和decltype关键字，使用他们可以在编译期就推导出变量或者表达式的类型，方便开发者编码也简化了代码。 [TOC] autoauto可以让编译器在编译器就推导出变量的类型，话不多说上代码： 123456auto a = 10; // 10是int型，可以自动推导出a是intint i =
+          
         </div>
       </a>
 
@@ -581,7 +691,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记- 左值、右值">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/" target="_self">
@@ -590,9 +706,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/" target="_self">
+      <a class="index-excerpt " href="/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/" target="_self">
         <div>
-          众所周知C++11新增了右值引用，谈右值引用我们也可以扩展一些相关概念： [TOC] 我们下面会一一介绍： 左值、右值概念1： 左值：可以放到等号左边的东西叫左值。 右值：不可以放到等号左边的东西就叫右值。 概念2： 左值：可以取地址并且有名字的东西就是左值。 右值：不能取地址的没有名字的东西就是右值。 举例： 1int a = b + c;   a是左值，a有变量名，也可以取地址，可以放到等号左
+          
         </div>
       </a>
 
@@ -642,7 +758,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/02/16/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="C++ 11新特性学习笔记-线程与并发">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/02/16/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" target="_self">
@@ -651,9 +773,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/16/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" target="_self">
+      <a class="index-excerpt " href="/2022/02/16/C11/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%B9%B6%E5%8F%91/" target="_self">
         <div>
-          c++11关于并发引入了好多好东西，这里按照如下顺序介绍： [TOC] std::thread相关c++11之前你可能使用pthread_xxx来创建线程，繁琐且不易读，c++11引入了std::thread来创建线程，支持对线程join或者detach。直接看代码： 12345678910111213141516171819202122232425262728#include &lt;iostr
+          
         </div>
       </a>
 
@@ -703,7 +825,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/15/%E5%BC%80%E6%BA%90%E5%BA%93-sigslot%E5%BA%93/" target="_self">
+          <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="开源库-sigslot库的简单例子">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
         <a href="/2022/01/15/%E5%BC%80%E6%BA%90%E5%BA%93-sigslot%E5%BA%93/" target="_self">
@@ -712,9 +840,9 @@
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/15/%E5%BC%80%E6%BA%90%E5%BA%93-sigslot%E5%BA%93/" target="_self">
+      <a class="index-excerpt " href="/2022/01/15/%E5%BC%80%E6%BA%90%E5%BA%93-sigslot%E5%BA%93/" target="_self">
         <div>
-          1234567891011121314151617181920212223242526272829303132//需要包含头#include &quot;sigslot.h&quot;  class sender&#123;public:    //signal+数字 是参数个数	sigslot::signal0&lt;&gt; Signal0;&#125;; //槽类必须继承has_slotsc
+          
         </div>
       </a>
 
@@ -779,6 +907,28 @@
     
 
     
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
 
     
   </main>
@@ -787,7 +937,8 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+      
+<a href="https://github.com/PlatoCN" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-github-fill"></i> </a> <a href="https://u.wechat.com/EE3PYlLtzJLEL3cb4jcAyok" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-wechat-fill"></i> </a>  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=CcchNxiPwFOyNTSTnjOR3kzDWlK1_6jo&noverify=0" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-qq-fill"></i> </a> <span>PlatoCN</span>
     </div>
   
   
@@ -842,6 +993,8 @@
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
 
 
 
@@ -856,5 +1009,5 @@
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"superSample":2,"width":200,"height":350,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false});</script></body>
 </html>
