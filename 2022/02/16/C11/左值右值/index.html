@@ -19,7 +19,7 @@
     <meta name="description" content="众所周知C++11新增了右值引用，谈右值引用我们也可以扩展一些相关概念： [TOC] 我们下面会一一介绍： 左值、右值概念1： 左值：可以放到等号左边的东西叫左值。 右值：不可以放到等号左边的东西就叫右值。 概念2： 左值：可以取地址并且有名字的东西就是左值。 右值：不能取地址的没有名字的东西就是右值。 举例： 1int a &#x3D; b + c;   a是左值，a有变量名，也可以取地址，可以放到等号左">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++ 11新特性学习笔记- 左值、右值">
-<meta property="og:url" content="http://platocn.com/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/index.html">
+<meta property="og:url" content="http://pla.com/2022/02/16/C11/%E5%B7%A6%E5%80%BC%E5%8F%B3%E5%80%BC/index.html">
 <meta property="og:site_name" content="PlatoCN">
 <meta property="og:description" content="众所周知C++11新增了右值引用，谈右值引用我们也可以扩展一些相关概念： [TOC] 我们下面会一一介绍： 左值、右值概念1： 左值：可以放到等号左边的东西叫左值。 右值：不可以放到等号左边的东西就叫右值。 概念2： 左值：可以取地址并且有名字的东西就是左值。 右值：不能取地址的没有名字的东西就是右值。 举例： 1int a &#x3D; b + c;   a是左值，a有变量名，也可以取地址，可以放到等号左">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"platocn.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"/img/avatar.png"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C++"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"pla.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"/img/avatar.png"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C++"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -419,7 +419,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>C++ 11新特性学习笔记- 左值、右值</div>
-      <div>http://platocn.com/2022/02/16/C11/左值右值/</div>
+      <div>http://pla.com/2022/02/16/C11/左值右值/</div>
     </div>
     <div class="license-meta">
       
