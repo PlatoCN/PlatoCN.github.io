@@ -1,0 +1,858 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenMingchang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="问题背景  　　近期遇到一个计算几何问题，需要从点集中重建一个合理的几何形状。这个问题既有二维的也有三维的，二维的情况相对简单一点，即给出平面区域的一系列散点，求出一定程度上反映这些散点轮廓的平面多边形，给出边的连接方式即可。如从下图的左图散点重建为右图的形状：    编辑 编辑    二维平面散点 平面多边形   　　不过这里有一些细节需要注意，必须明确这一系列点的含义，有时给出的点集是表征图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二维几何重建">
+<meta property="og:url" content="http://platocn.com/2021/04/03/%E7%AE%97%E6%B3%95/%E4%BA%8C%E7%BB%B4%E5%87%A0%E4%BD%95%E9%87%8D%E5%BB%BA/index.html">
+<meta property="og:site_name" content="PlatoCN">
+<meta property="og:description" content="问题背景  　　近期遇到一个计算几何问题，需要从点集中重建一个合理的几何形状。这个问题既有二维的也有三维的，二维的情况相对简单一点，即给出平面区域的一系列散点，求出一定程度上反映这些散点轮廓的平面多边形，给出边的连接方式即可。如从下图的左图散点重建为右图的形状：    编辑 编辑    二维平面散点 平面多边形   　　不过这里有一些细节需要注意，必须明确这一系列点的含义，有时给出的点集是表征图">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/35abaaf4b6f259458f5f568c64d5182e.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/dda8629dd9534def346c77801fce8340.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3dc3a9ad600c9795cfdff218452dd728.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9e5f2aed2b7112d99caf42824dd54e1e.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d91b539c715d5ab08e7b4c6ac87ae679.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/cde0d2926915c09f697d344357a2f78a.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/a623f6e2c88268d71d58e1fe87abaa64.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4e6eaa0aa8caaea3dbc63a849f6fc3cd.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d87577437e8e7ab1e28834d563136925.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9284c52d819ce3842d56c2f0f915fb12.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3e5ab205f9e8070b8f82c9acc24a6735.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/223d3947f9fdff9ad55ce89bd4b7231e.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/2afa86fa9f2b5a9b15b001d2d638bc7b.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6496c13c73874e48902837cb15c9661c.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d379bdd891feda0547631af92140733d.gif">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/36254a343fcdfdb96461a2e0bcd24988.gif">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6fb72bd74c2041a0d0579904307598f1.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/71bfe0044fea4fb26f4b7ba2c0a2f4eb.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/24689cba515dbdd3578da1ead727e5e1.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e67b8065e3fbcb1165d09a60e051529a.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c56d425631928076c41d5ab3f12a6853.png">
+<meta property="article:published_time" content="2021-04-03T11:39:07.000Z">
+<meta property="article:modified_time" content="2022-11-17T03:11:28.110Z">
+<meta property="article:author" content="RenMingchang">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/35abaaf4b6f259458f5f568c64d5182e.png">
+  
+  
+  
+  <title>二维几何重建 - PlatoCN</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"platocn.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"/img/avatar.png"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C++"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>PlatoCN&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="二维几何重建"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-03 19:39" pubdate>
+          2021年4月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">二维几何重建</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p> <strong>问题背景</strong></p>
+<hr>
+<p>　　近期遇到一个计算几何问题，需要从点集中重建一个合理的几何形状。这个问题既有二维的也有三维的，二维的情况相对简单一点，即给出平面区域的一系列散点，求出一定程度上反映这些散点轮廓的平面多边形，给出边的连接方式即可。如从下图的左图散点重建为右图的形状：</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/35abaaf4b6f259458f5f568c64d5182e.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/dda8629dd9534def346c77801fce8340.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>二维平面散点</td>
+<td>平面多边形</td>
+</tr>
+</tbody></table>
+<p>　　不过这里有一些细节需要注意，必须明确这一系列点的含义，有时给出的点集是表征图形边界的，如左图的情况；有时则是表征图形所覆盖的范围，即在图形的内部也有一定的点分布。这两种不同的含义是和具体的应用场景相关的。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/3dc3a9ad600c9795cfdff218452dd728.png" srcset="/img/loading.gif" lazyload alt="img">         <img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/9e5f2aed2b7112d99caf42824dd54e1e.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有的场景是求散点描绘的轮廓</td>
+<td>有的场景是求散点分布区域的边界轮廓</td>
+</tr>
+</tbody></table>
+<p>[TOC]</p>
+<h3 id="凹包与Alpha-shape"><a href="#凹包与Alpha-shape" class="headerlink" title="凹包与Alpha shape"></a>凹包与Alpha shape</h3><hr>
+<p>　　有不少计算几何领域的资料探讨过这一类问题的解决方案，笔者也曾经阅读过部分相关的文献，也在网络上进行过一些搜索。本文不能一一去介绍所有的方法，所以就介绍几种简单直观的方法来解决二维点集重建平面多边形的问题。</p>
+<p>　　首先很多学计算机的人都知道<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Convex_hull">凸包</a>，凸包求取的是覆盖所有点的凸多边形，由于限定死了一定要凸多边形，所以凸包不是本文所讨论问题的解决方案。本文所求的形状肯定不能否定存在凹陷的部分，因而可以联想到这个问题的解是否是求一种“凹包”，或者说一种广义的参数化的凸包。事实上的确有凹包的概念，英文叫做<a target="_blank" rel="noopener" href="http://www.ian-ko.com/ET_GeoWizards/UserGuide/concaveHull.htm">concave hull</a>（凸包叫convex hull）。不过于凸包的情况不同，凹包没有特别明确的定义，给定一个较不规则的点集，可以有各种各样的凹包，但凸包是确定的，如下图所示。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/d91b539c715d5ab08e7b4c6ac87ae679.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/cde0d2926915c09f697d344357a2f78a.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/a623f6e2c88268d71d58e1fe87abaa64.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>凸包</td>
+<td>一种可能的凹包连接方式</td>
+<td>这样连也是凹包</td>
+</tr>
+</tbody></table>
+<p>　　进一步查找相关的资料可以发现一个叫做<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Alpha_shape">alpha shape</a>的概念。这个概念最早出现于论文<a target="_blank" rel="noopener" href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=1056714&url=http://ieeexplore.ieee.org/iel5/18/22733/01056714">“On the shape of a set of points in the plane”</a>中。alpha shape有较为正式的定义，若要简单点解释它，alpha shape其实就是在凸包基础上多了一个可以设定的参数α，因为这个α，在alpha shape重建形状的过程中可能就不会像凸包一样连接相距过远的顶点。参数α若趋于无穷大，则这个alpha shape会无无限接近凸包；而α取小了，则alpha shape会倾向于在一定位置凹陷进去，以更加贴合点集的外形。选择合理的α就能够控制生成的形状让其更加符合点集所描绘的形状。所以给出一个α值，就有点类似于给出一个长度的限制，例如让多边形的任何一边长度不超过R。</p>
+<p>　　</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/4e6eaa0aa8caaea3dbc63a849f6fc3cd.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自制ConcaveGenerator小软件截图</td>
+</tr>
+</tbody></table>
+<p> <strong>第一种思路–基于Delaunay三角化</strong> </p>
+<hr>
+<p>　　有一定计算几何基础的人一定熟悉<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Delaunay_triangulation">Delaunay三角化</a>，通过这一个过程可以形成Delaunay三角网，假如我们为想要求取形状的点集上使用Delaunay三角化算法，可以得到如下的三角网。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/d87577437e8e7ab1e28834d563136925.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/9284c52d819ce3842d56c2f0f915fb12.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一个点集的Delaunay三角网</td>
+<td>另一个例子</td>
+</tr>
+</tbody></table>
+<p>　　一看到这样的三角网，就不难想到一个好点子：因为我们想要求取的形状就是Delaunay三角网的子集，所以我们只需要从Delaunay三角网的最外层边开始外不断的删去超过长度限制的边，当这个过程结束时，我们就能够得到一个大致符合我们预期的形状。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/3e5ab205f9e8070b8f82c9acc24a6735.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/223d3947f9fdff9ad55ce89bd4b7231e.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>点集的Delaunay三角网</td>
+<td>删掉边上太长的边就能形成预期的形状</td>
+</tr>
+</tbody></table>
+<p>所以总结这个思路，输入为点集S和长度限制R的求取凹包的边列表算法的过程如下：</p>
+<ol>
+<li>为点集S求取Delaunay三角网M，三角网用标准Mesh形式表示。</li>
+<li>为M初始化所有Edge对象，并求取Edge的长度以及邻接三角形集合。其中邻接2个三角形的边为内部边，1个三角形的为边界边，0个三角形的为计算过程中会退化的边。</li>
+<li>将所有长度大于R的边界边加入队列，并当队列非空时循环下列过程： <ol>
+<li>从队列中取出一条边E，得到E的唯一邻接三角形T。</li>
+<li>找到T中另外两个边E1，E2将他们的邻接三角形集合删去T。</li>
+<li>将E1,E2中新形成的长度大于R的边界边加入队列。</li>
+<li>将E置无效标记，若E1,E2有退化的，也置无效标记。</li>
+</ol>
+</li>
+<li>收集所有有效的边界边，形成边列表，输出。</li>
+</ol>
+<p>　　下图是用基于Delauney的方法生成的凹包，看上去大致符合我们的预期：</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/2afa86fa9f2b5a9b15b001d2d638bc7b.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/6496c13c73874e48902837cb15c9661c.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>生成结果</td>
+<td>显示三角网</td>
+</tr>
+</tbody></table>
+<h3 id="滚边法（Edge-Pivoting）"><a href="#滚边法（Edge-Pivoting）" class="headerlink" title="滚边法（Edge Pivoting）"></a>滚边法（Edge Pivoting）</h3><hr>
+<p>　　这是笔者最初想到的一个从求凸包的<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Graham_scan">Graham Scan</a>算法衍生出来的一个方法。求凸包的Graham Scan算法先找到一个Y最低的点作为起始点，然后使用叉积角度判断的方法去判断点的走向，最后在栈内留下了凸包的点序列。具体的算法讲解与代码，网上一搜各种有，这里就不详细表述。本文要介绍的方法也是和Graham Scan法从同一个出发点出发，通过扫描角度来确定下一个点。具体算法流程从下面的图文说明可以大致看出来：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/d379bdd891feda0547631af92140733d.gif" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>　　首先要实现这个算法，需要对随机的一个点查询距离其几何距离在R内的所有点，即求所谓的<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Fixed-radius_near_neighbors">R邻域</a>。这个R邻域算法是<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">KNN</a>（K-nearest neighbors）算法的一个变形，可以在小于O(n2)的复杂度下求取R领域，本文为了简单起见没有实现这个基于<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/K-d_tree">K-d Tree</a>的算法，感兴趣的读者可以查阅相关资料了解这个算法。本文涉及的应用场景因为点数目不大，所以使用的方法没有过多考虑效率，实现R邻域的方式是先建立一个n*n的二维数组存储所有点两两之间的距离，然后遍历一次二维数组，为所有的点建立一个R邻域列表，该列表中存储了对应点R邻域的索引值，这个列表很有用，下面要介绍的滚球法也利用了这个列表。</p>
+<p>　　实际上不难理解，假设AB为凹包的一个边，那么其下一个点C必然是在B的R邻域点中选择。我们实现这个算法的关键，就是为AB边找一个合适的C点。这里笔者设想的寻找C的方法使用如下原则：</p>
+<ol>
+<li>假如B的R领域除了A就只有一个点，那么那个点就是C。</li>
+<li>以B为圆心从向量BA出发转圈扫描，遇到的第一个点为C。</li>
+</ol>
+<p>　　这里涉及到一个小算法，即所谓的极坐标方向排序问题，这个问题的描述是：给定一个原点P和一个初始方向n，如何为平面上的点集S排序，使得点集中的点P1,P2…PN与P的连接是按从n开始的逆时针排列的。这个问题搜一搜stackoverflow即得到一个很好的解答，这个<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/7774241/sort-points-by-angle-from-given-axis">链接</a>里一个人给出一个用于比较的函数，一旦有了比较函数，排序也不成问题，这个比较函数在后面的方法中会出现。其具体的比较原理如果对向量的点积叉积有所了解也不难理解。这里不妨提一下点集叉积的结果符号的几何含义：</p>
+<ol>
+<li>向量a与b的点集结果为一个实数，计算方式是ax<em>bx+ay</em>by，满足交换率，为正值代表ab夹角小于90度,为锐角，负值代表夹角大于90度（谈夹角的话是指0-180度范围），为钝角。</li>
+<li>向量a与b的叉积结果为一个向量，其数值的计算方法是ax<em>bx-ay</em>by，不满足交换率，为正值代表向量b处于向量a的逆时针方向（即a逆时针转一个小于180的角能转到b），负值代表向量b处于向量a的顺时针方向（即a顺时针转一个小于180的角能转到b，非要逆时针转则必然超过180度）。</li>
+</ol>
+<p>　　那么找C点的第二条实现的方式就类似于对一个数组找最小值那样，通过比较找到最小的角度，这个有最小角偏向的就是C点。不过遗憾的是这个思路其实是问题的，测试表明对一些点集采用这个方法会有BUG出现。例如当C点出现在BA向量小于90度的方向时，形成的BC边和AB边具有大致相反的方向，会导致下一步的寻点出现逆向，故这个思路不算是一个成功的思路，不过失败是成功之母，它却引出另一个滚球法的思路，相比这个思路具有更好的鲁棒性。</p>
+<h3 id="滚球法（Ball-Pivoting）"><a href="#滚球法（Ball-Pivoting）" class="headerlink" title="滚球法（Ball Pivoting）"></a>滚球法（Ball Pivoting）</h3><hr>
+<p>　　对于任何点集，我们把这些点想象为钉在平面上的钉子。假如拿一个半径大于一定值的球去从边界接近这个钉群，我们可以用这个球在这些钉子群的边界滚一圈，每次滚动，球都能接触到两个钉子而被卡住。</p>
+<p>　　这个思路要求一个合法的R，R太小就没法形成一个闭合的图形。由于我们讨论问题的初衷是要形成一个合适的多边形而不是0个或多个，这样对R的选择就应该有一个限制，太小的R必然出不了结果，这里姑且假设给的R值是合适的。此过程若形成一个多边形，则多变形的最长的边一定小于球的直径。所以算法输入参数为R，意味着拿一个半径为R/2的圆去滚。如下图显示了这个滚球的过程：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/36254a343fcdfdb96461a2e0bcd24988.gif" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>　　我们不难发现一个性质，对于任何一次翻滚，假设从弦DE翻转到新弦EF，圆不可能扫过任何的其他点，因为假如扫到其他点，必然会被这个点所卡住，那么新弦就不可能是EF了。这样我们只需对极坐标排序后的E点的R邻域依次寻找符合不覆盖其他点的圆即可。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/6fb72bd74c2041a0d0579904307598f1.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/71bfe0044fea4fb26f4b7ba2c0a2f4eb.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>圆在翻滚时候不能扫到其他点</td>
+<td>对E的R邻域测试圆覆盖情况寻找合适的F</td>
+</tr>
+</tbody></table>
+<p>　　这个算法的执行过程和滚边法相似，算法结构都是先找起始点，然后循环寻找下一个点，核心问题也是从边DE线段出发找新线段EF，只是不再使用边去扫，而是用圆去扫。这里先给出这个算法的大致步骤：</p>
+<ol>
+<li>先像求凸包那样求出一个Y值最小(Y值相同则取X最大)的点，作为初始点A，此点一定在凹包上。</li>
+<li>从此点出发，(1,0)为基准向量，先找一个小于R的边作为初始边，这时这个点即为B，此时一个半径为R/2的圆就卡在了AB上，此时第一个弦AB就找到了。</li>
+<li>循环寻找接下来的弦，假如上一条弦为DE，则下一条弦必然从E开始，连接到E的一个R领域内的点F。寻找F可以使用如下的原则：先对E的R领域的点，以E为中心ED向量为基准进行极坐标方向排序，之后依次为R领域点F0<del>FN建立以EFi为弦的圆，然后检查其中是否包含其他F0</del>FN的点，若不存在，则EFi即为新弦，则跳出循环。</li>
+<li>依次找到所有的弦，直到找不到新弦或遇到以前已经作为弦的点为止。</li>
+</ol>
+<p>　　一旦R值给的比较好，这个过程一定能给出一个闭合的图形。下图为几张用ConcaveGenerator生成的图片示例，其中检查参数按钮会自动给一个能让所有点都有至少2个领域的R值。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://img-blog.csdnimg.cn/img_convert/24689cba515dbdd3578da1ead727e5e1.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://img-blog.csdnimg.cn/img_convert/e67b8065e3fbcb1165d09a60e051529a.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</td>
+</tr>
+<tr>
+<td>一个例子，可以看出一些点没有被滚过</td>
+</tr>
+</tbody></table>
+<p>上述过程其实感觉还有很大的优化余地，不过在点数不是很多的场合还是能姑且一用的。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/c56d425631928076c41d5ab3f12a6853.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithm/" class="category-chain-item">Algorithm</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Algorithm/">#Algorithm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>二维几何重建</div>
+      <div>http://platocn.com/2021/04/03/算法/二维几何重建/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RenMingchang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/15/%E5%BC%80%E6%BA%90%E5%BA%93-sigslot%E5%BA%93/" title="开源库-sigslot库的简单例子">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">开源库-sigslot库的简单例子</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/01/C++-cjson%E7%9A%84%E8%AF%BB%E5%86%99%E4%B8%8E%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/" title="C++-cjson的读写与个人理解.md">
+                        <span class="hidden-mobile">C++-cjson的读写与个人理解.md</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a href="https://github.com/PlatoCN" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-github-fill"></i> </a> <a href="https://u.wechat.com/EE3PYlLtzJLEL3cb4jcAyok" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-wechat-fill"></i> </a>  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=CcchNxiPwFOyNTSTnjOR3kzDWlK1_6jo&noverify=0" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-qq-fill"></i> </a> <span>PlatoCN</span>
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"superSample":2,"width":200,"height":350,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false});</script></body>
+</html>

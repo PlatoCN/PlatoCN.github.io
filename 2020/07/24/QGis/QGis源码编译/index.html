@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenMingchang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="​    关于QGis各种文件的理解参考这位老哥QGis二次开发 – 源码编译终极篇_MrJGao的博客-CSDN博客_qgis for c# 一、准备工作 1、下载QGIS源码  https:&#x2F;&#x2F;github.com&#x2F;qgis&#x2F;QGIS,最好用git clone到本地,这样可以看到所有的版本,缺点是clone的速度非常慢  2、编译所需工具   CMake &gt;&#x3D; 2.8.0 Flex Bi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QGis二次开发-QGis源码编译QGIS3.4.15 + VS2017 + qt5.12 + win10">
+<meta property="og:url" content="http://platocn.com/2020/07/24/QGis/QGis%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/index.html">
+<meta property="og:site_name" content="PlatoCN">
+<meta property="og:description" content="​    关于QGis各种文件的理解参考这位老哥QGis二次开发 – 源码编译终极篇_MrJGao的博客-CSDN博客_qgis for c# 一、准备工作 1、下载QGIS源码  https:&#x2F;&#x2F;github.com&#x2F;qgis&#x2F;QGIS,最好用git clone到本地,这样可以看到所有的版本,缺点是clone的速度非常慢  2、编译所需工具   CMake &gt;&#x3D; 2.8.0 Flex Bi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724145906552.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724150242873.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724150350961.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724151750297.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724150540420.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724151105850.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724151433956.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724152001518.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200724152015483.png">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">
+<meta property="article:published_time" content="2020-07-24T04:39:07.000Z">
+<meta property="article:modified_time" content="2022-11-17T03:10:42.325Z">
+<meta property="article:author" content="RenMingchang">
+<meta property="article:tag" content="QGis二次开发">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200724145906552.png">
+  
+  
+  
+  <title>QGis二次开发-QGis源码编译QGIS3.4.15 + VS2017 + qt5.12 + win10 - PlatoCN</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"platocn.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"/img/avatar.png"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"C++"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>PlatoCN&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="QGis二次开发-QGis源码编译QGIS3.4.15 + VS2017 + qt5.12 + win10"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-07-24 12:39" pubdate>
+          2020年7月24日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          820 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">QGis二次开发-QGis源码编译QGIS3.4.15 + VS2017 + qt5.12 + win10</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>​    关于QGis各种文件的理解参考这位老哥<a target="_blank" rel="noopener" href="https://blog.csdn.net/deirjie/article/details/63713033">QGis二次开发 – 源码编译终极篇_MrJGao的博客-CSDN博客_qgis for c#</a></p>
+<h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><ul>
+<li><p>1、下载QGIS源码</p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/qgis/QGIS,%E6%9C%80%E5%A5%BD%E7%94%A8git">https://github.com/qgis/QGIS,最好用git</a> clone到本地,这样可以看到所有的版本,缺点是clone的速度非常慢</p>
+</li>
+<li><p>2、编译所需工具</p>
+</li>
+</ul>
+<p>CMake &gt;= 2.8.0</p>
+<p>Flex</p>
+<p>Bison &gt;= 2.4</p>
+<p>默认安装即可</p>
+<ul>
+<li>3、第三方库</li>
+</ul>
+<p>以下依赖库可直接在OSGeo4w上安装,安装后将OSGeo4W添加到系统变量里,具体请百度</p>
+<p>Qt &gt;= 4.5.0</p>
+<p>Proj &gt;= 4.4.x</p>
+<p>GEOS &gt;= 3.0</p>
+<p>Sqlite3 &gt;= 3.0.0</p>
+<p>GDAL/OGR &gt;= 1.4.x</p>
+<p>Qwt &gt;= 5.0 &amp; (&lt; 6.1 with internalQwtPolar)</p>
+<p>expat &gt;= 1.95 </p>
+<h3 id="二、CMAKE配置"><a href="#二、CMAKE配置" class="headerlink" title="二、CMAKE配置"></a>二、CMAKE配置</h3><p>​    第一个是源码路径,第二个是要新建的build,编译后的文件在此.</p>
+<p><img src="https://img-blog.csdnimg.cn/20200724145906552.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>​    点击configure,设置第一行VS2017,第二行x64  其余默认 会弹窗报错说项目无效.不要慌按照如下勾选</p>
+<p><img src="https://img-blog.csdnimg.cn/20200724150242873.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>​    开始可能会没有<img src="https://img-blog.csdnimg.cn/20200724150350961.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑这两个,再次点击configure后就会出现.</p>
+<p>​    干掉test可以加快编译速度.任性的同学请随意</p>
+<p><img src="https://img-blog.csdnimg.cn/20200724151750297.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>​    编译如果不通过,编码也要改一下,如果不行,openMP换成MP</p>
+<p><img src="https://img-blog.csdnimg.cn/20200724150540420.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>​    Win10可能在文件里找不到SetupAPI.lib文件,被隐藏了.直接搜就行</p>
+<p><img src="https://img-blog.csdnimg.cn/20200724151105850.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>​    依赖库的设置参照这位老哥<a target="_blank" rel="noopener" href="https://blog.csdn.net/liminlu0314/article/details/17400075">QGIS编译_箜_Kong的博客-CSDN博客_windows编译qgis</a></p>
+<p>​    后点击Generate.出现如下 便成功了</p>
+<p><img src="https://img-blog.csdnimg.cn/20200724151433956.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"></p>
+<p>​    点击Open Project打开项目,如下操作</p>
+<p><img src="https://img-blog.csdnimg.cn/20200724152001518.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动"><img src="https://img-blog.csdnimg.cn/20200724152015483.png" srcset="/img/loading.gif" lazyload alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" srcset="/img/loading.gif" lazyload alt="点击并拖拽以移动">编辑</p>
+<p>​    提示缺少xxx.dll文件去OSGeo4W文件里找,复制到与exe文件的同级目录,</p>
+<p>​    懒蛋请直接下载,版本不同不保证有效</p>
+<p>​    链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1fhmzC1k07384g62zT8BI5w">https://pan.baidu.com/s/1fhmzC1k07384g62zT8BI5w</a><br>​    提取码：hhhh</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/QGis%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/" class="category-chain-item">QGis二次开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/QGis%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/">#QGis二次开发</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>QGis二次开发-QGis源码编译QGIS3.4.15 + VS2017 + qt5.12 + win10</div>
+      <div>http://platocn.com/2020/07/24/QGis/QGis源码编译/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RenMingchang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年7月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/04/QGis/QGis%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91-%E9%A2%84%E8%A7%88%E5%87%A0%E4%BD%95%E5%9B%BE%E5%BD%A2,QgsRubberBand%E7%9A%84%E5%BA%94%E7%94%A8/" title="QGis二次开发-预览几何图形,QgsRubberBand的应用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">QGis二次开发-预览几何图形,QgsRubberBand的应用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/01/QGis/QGis%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E4%BF%9D%E5%AD%98-%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%BD%A2%E5%92%8C%E5%AD%97%E6%AE%B5/" title="QGis二次开发-保存矢量图形和字段">
+                        <span class="hidden-mobile">QGis二次开发-保存矢量图形和字段</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a href="https://github.com/PlatoCN" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-github-fill"></i> </a> <a href="https://u.wechat.com/EE3PYlLtzJLEL3cb4jcAyok" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-wechat-fill"></i> </a>  <a href="https://qm.qq.com/cgi-bin/qm/qr?k=CcchNxiPwFOyNTSTnjOR3kzDWlK1_6jo&noverify=0" target="_blank" rel="nofollow noopener">  <i class="iconfont icon-qq-fill"></i> </a> <span>PlatoCN</span>
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"superSample":2,"width":200,"height":350,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false});</script></body>
+</html>
